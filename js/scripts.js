@@ -8,6 +8,47 @@
 // 
 
 window.addEventListener('DOMContentLoaded', event => {
+// ---- Начало кода глобальной анимации ----
+
+// Берём все элементы на странице
+const allElements = document.querySelectorAll('body *');
+
+// Добавляем всем элементам класс animate-on-scroll
+allElements.forEach(el => {
+  // исключаем скрипты и пустые элементы
+  if (el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && el.offsetHeight > 0) {
+    el.classList.add('animate-on-scroll');
+  }
+});
+
+// Функция проверяет, виден ли элемент на экране
+const elementInView = (el, offset = 0) => {
+  const elementTop = el.getBoundingClientRect().top;
+  return elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset;
+};
+
+// Показываем элемент (добавляем класс visible)
+const displayScrollElement = (el) => {
+  el.classList.add('visible');
+};
+
+// Обработка прокрутки
+const handleScrollAnimation = () => {
+  const animatedElements = document.querySelectorAll('.animate-on-scroll');
+  animatedElements.forEach(el => {
+    if (elementInView(el, 50)) { // элемент появится за 50px до видимой границы
+      displayScrollElement(el);
+    }
+  });
+};
+
+// Навешиваем обработчик на скролл
+document.addEventListener('scroll', handleScrollAnimation);
+
+// Чтобы элементы видимые с начала сразу показались
+handleScrollAnimation();
+
+// ---- Конец кода глобальной анимации ----
 
     // Navbar shrink function
     var navbarShrink = function () {
@@ -37,7 +78,6 @@ window.addEventListener('DOMContentLoaded', event => {
             rootMargin: '0px 0px -40%',
         });
     };
-
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
     const responsiveNavItems = [].slice.call(
