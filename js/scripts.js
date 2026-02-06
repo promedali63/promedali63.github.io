@@ -1,23 +1,16 @@
 /*!
-* Start Bootstrap - Agency v7.0.12 (https://startbootstrap.com/theme/agency)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
-/*!
 * Start Bootstrap - Agency v7.0.12
 * Авторские права: Start Bootstrap
 */
 
-// Ждём полной загрузки страницы, чтобы все элементы были готовы
+// Ждём полной загрузки страницы
 window.onload = function() {
 
     // ----------------------
     // СБРОС ПРОКРУТКИ ВВЕРХ
     // ----------------------
-    window.scrollTo(0, 0);
+    // Используем небольшую задержку, чтобы браузер точно не ставил скролл обратно
+    setTimeout(() => window.scrollTo(0, 0), 10);
 
     // ----------------------
     // Navbar shrink function
@@ -33,9 +26,7 @@ window.onload = function() {
         }
     };
 
-    // Запускаем сразу
     navbarShrink();
-    // Событие прокрутки для navbar
     document.addEventListener('scroll', navbarShrink);
 
     // ----------------------
@@ -67,7 +58,7 @@ window.onload = function() {
     // ----------------------
     // ГЛОБАЛЬНАЯ АНИМАЦИЯ ЭЛЕМЕНТОВ ПРИ СКРОЛЛЕ
     // ----------------------
-    const allElements = document.querySelectorAll('body *');
+    const allElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, section, div');
     allElements.forEach(el => {
         if (el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && el.offsetHeight > 0) {
             el.classList.add('animate-on-scroll');
@@ -75,8 +66,7 @@ window.onload = function() {
     });
 
     const elementInView = (el, offset = 0) => {
-        const elementTop = el.getBoundingClientRect().top;
-        return elementTop <= window.innerHeight - offset;
+        return el.getBoundingClientRect().top <= window.innerHeight - offset;
     };
 
     const displayScrollElement = (el) => el.classList.add('visible');
@@ -90,8 +80,6 @@ window.onload = function() {
         });
     };
 
-    // Событие прокрутки
     document.addEventListener('scroll', handleScrollAnimation);
-    // Запуск сразу для элементов, видимых с начала
     handleScrollAnimation();
 };
